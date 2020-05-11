@@ -1,0 +1,27 @@
+@startuml
+title "Spring Batch Skelton code"
+class BatchConfig {
+
+}
+class BatchItemReader {
+    +read()
+}
+class BatchItemProcessor {
+    +process()
+}
+class BatchItemWriter {
+    +write()
+}
+
+BatchConfig ..> BatchItemReader : reader
+BatchConfig ..> BatchItemProcessor : processor
+BatchConfig ..> BatchItemWriter : writer
+BatchConfig .. InputData
+BatchConfig .. OutputData
+BatchItemReader .. InputData
+BatchItemProcessor .. InputData
+BatchItemProcessor .. OutputData
+BatchItemWriter .. OutputData
+
+
+@enduml
