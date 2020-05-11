@@ -16,12 +16,12 @@ class BatchItemWriter {
 BatchConfig ..> BatchItemReader : reader
 BatchConfig ..> BatchItemProcessor : processor
 BatchConfig ..> BatchItemWriter : writer
-BatchConfig .. InputData
-BatchConfig .. OutputData
-BatchItemReader .. InputData
-BatchItemProcessor .. InputData
-BatchItemProcessor .. OutputData
-BatchItemWriter .. OutputData
+BatchConfig .. InputItem
+BatchConfig .. OutputItem
+BatchItemReader .. InputItem
+BatchItemProcessor .. InputItem
+BatchItemProcessor .. OutputItem
+BatchItemWriter .. OutputItem
 
 
 @enduml
