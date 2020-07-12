@@ -14,6 +14,6 @@ public class BatchItemWriter implements ItemWriter<OutputItem> {
     public void write(List<? extends OutputItem> items) throws Exception {
         log.info("called write method");
         // 本当はここでデータをDBやファイルへ出力する
-        log.info("Output (" + items + ")");
+        log.info("Output ({})", items);
     }
 }
