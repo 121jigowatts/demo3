@@ -15,7 +15,8 @@ public class BatchItemProcessor implements ItemProcessor<InputItem, OutputItem> 
         // ここでデータのバリデーションチェックをやる
         // 入力データを出力データへ変換する
         OutputItem outputItem = new OutputItem(inputItem.getData().toUpperCase());
-        log.info("Input (" + inputItem + "), Output (" + outputItem + ")");
+        log.info("Input ({}), Output ({})", inputItem, outputItem);
+
         return outputItem;
     }
 }

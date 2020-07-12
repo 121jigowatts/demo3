@@ -21,11 +21,11 @@ public class StepListener implements StepExecutionListener {
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
         // Stepを実行した後に実行する処理を書く
-        log.info("Summary : " + stepExecution.getSummary());
-        log.info("commit count : " + stepExecution.getCommitCount());
-        log.info("skip count : " + stepExecution.getSkipCount());
-        log.info("write count : " + stepExecution.getWriteCount());
-        log.info("read count : " + stepExecution.getReadCount());
+        log.info("Summary : {}", stepExecution.getSummary());
+        log.info("commit count : {}", stepExecution.getCommitCount());
+        log.info("skip count : {}", stepExecution.getSkipCount());
+        log.info("write count : {}", stepExecution.getWriteCount());
+        log.info("read count : {}", stepExecution.getReadCount());
         if (stepExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("!!! STEP FINISHED! Time to verify the results");
             return ExitStatus.COMPLETED;
