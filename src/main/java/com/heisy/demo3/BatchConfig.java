@@ -9,19 +9,12 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableBatchProcessing
 public class BatchConfig {
-
-    @Autowired
-    public JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    public StepBuilderFactory stepBuilderFactory;
 
     @Bean
     public ItemReader<InputItem> reader() {
@@ -39,9 +32,10 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step step1(StepListener listener) {
-        return this.stepBuilderFactory.get("step1").<InputItem, OutputItem>chunk(1).reader(reader())
-                .processor(processor()).writer(writer()).listener(listener).build();
+    public Step step1(StepBuilderFactory stepBuilderFactory, StepListener listener, ItemReader<InputItem> reader,
+            ItemProcessor<InputItem, OutputItem> processor, ItemWriter<OutputItem> writer) {
+        return stepBuilderFactory.get("step1").<InputItem, OutputItem>chunk(1).reader(reader).processor(processor)
+                .writer(writer).listener(listener).build();
     }
 
     @Bean
@@ -50,12 +44,17 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step step2() {
-        return this.stepBuilderFactory.get("step2").tasklet(tasklet()).build();
+    public Step step2(StepBuilderFactory stepBuilderFactory, Tasklet tasklet) {
+        return stepBuilderFactory.get("step2").tasklet(tasklet).build();
     }
 
     @Bean
-    public Job runJob(JobListener listener, Step step1, Step step2) {
-        return this.jobBuilderFactory.get("runJob").listener(listener).start(step1).next(step2).build();
+    public Job runJob(JobBuilderFactory jobBuilderFactory, JobListener listener, Step step1, Step step2) {
+        return jobBuilderFactory.get("runJob").listener(listener).start(step1).next(step2).build();
+    }
+
+    @Bean
+    public Job myJob(JobBuilderFactory jobBuilderFactory, JobListener listener, Step step2) {
+        return jobBuilderFactory.get("myJob").listener(listener).start(step2).build();
     }
 }
